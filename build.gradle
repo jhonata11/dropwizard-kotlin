@@ -36,7 +36,6 @@ shadowJar {
     mergeServiceFiles()
     archivesBaseName = "microservice"
 }
-shadowJar.mustRunAfter(build)
 
 mainClassName = 'MainKt'
 run {
