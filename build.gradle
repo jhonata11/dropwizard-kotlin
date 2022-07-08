@@ -1,0 +1,44 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version "1.7.10"
+    id 'java'
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'io.dropwizard:dropwizard-core:2.1.1'
+    implementation 'io.dropwizard:dropwizard-client:2.1.1'
+    implementation 'dev.failsafe:failsafe:3.2.4'
+
+    implementation 'com.google.inject:guice:5.1.0'
+    implementation 'ru.vyarus:dropwizard-guicey:5.6.1'
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.7.10"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.3"
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+shadowJar {
+    zip64 true
+    mergeServiceFiles()
+    archivesBaseName = "microservice"
+}
+shadowJar.mustRunAfter(build)
+
+mainClassName = 'MainKt'
+run {
+    args 'server', 'dev.yml'
+}
