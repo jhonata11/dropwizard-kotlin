@@ -24,7 +24,17 @@ class HelloClient @Inject constructor(private val client: Client) {
     }
 
     suspend fun getStatusResponse(status: Int) = coroutineScope {
-        val webTarget = client.target("https://httpbin.org/delay/8")
+        val webTarget = client.target("https://httpbin.org/status/$status")
+        val invocation = webTarget.request();
+        val result = invocation.get()
+        when(result.status) {
+            200 -> println()
+            500 -> throw RuntimeException("Server error")
+        }
+    }
+
+    suspend fun getDelayResponse(duration: Int) = coroutineScope {
+        val webTarget = client.target("https://httpbin.org/delay/$duration")
         val invocation = webTarget.request();
         val result = invocation.get()
         when(result.status) {

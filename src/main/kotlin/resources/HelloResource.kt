@@ -5,13 +5,18 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import services.HelloService
+import services.RequestType
 import java.net.SocketTimeoutException
 import javax.inject.Inject
+import javax.validation.constraints.NotBlank
+import javax.validation.constraints.NotEmpty
+import javax.validation.constraints.NotNull
 import javax.ws.rs.GET
 import javax.ws.rs.Path
 import javax.ws.rs.PathParam
 import javax.ws.rs.ProcessingException
 import javax.ws.rs.Produces
+import javax.ws.rs.QueryParam
 import javax.ws.rs.container.AsyncResponse
 import javax.ws.rs.container.Suspended
 import javax.ws.rs.core.MediaType
@@ -28,25 +33,16 @@ class HelloResource @Inject constructor(
     @GET
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
-    fun getSimpleResponse(
-        @Suspended asyncResponse: AsyncResponse
-    ) {
-        asyncResponse.executeAsync {
-            val res = service.getSimpleResponse()
-            return@executeAsync Response.ok(res).build()
-        }
-    }
-
-    @GET
-    @Path("/{statusCode}")
-    @Produces(MediaType.APPLICATION_JSON)
     fun getStatusResponse(
-        @PathParam("statusCode") statusCode: Int?,
+        @NotBlank @QueryParam("payload") payload: String?,
+        @NotBlank @QueryParam("type") type: String,
         @Suspended asyncResponse: AsyncResponse
     ) {
+        val requestType = RequestType.valueOf(type)
+        val parsedPayload = payload?.toIntOrNull()
         asyncResponse.executeAsync {
-            service.getStatusResponse(statusCode ?: 200)
-            return@executeAsync Response.ok().build()
+            val response = service.getSimpleResponse(requestType, parsedPayload)
+            return@executeAsync Response.ok(response).build()
         }
     }
 }
