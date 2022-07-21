@@ -1,7 +1,7 @@
 package resources
 
+import api.request.RequestType
 import services.HelloService
-import services.RequestType
 import javax.inject.Inject
 import javax.validation.constraints.NotBlank
 import javax.ws.rs.GET

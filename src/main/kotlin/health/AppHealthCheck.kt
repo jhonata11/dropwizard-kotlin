@@ -1,9 +1,9 @@
 package health
 
+import api.request.RequestType
 import kotlinx.coroutines.runBlocking
 import ru.vyarus.dropwizard.guice.module.installer.feature.health.NamedHealthCheck
 import services.HelloService
-import services.RequestType
 import javax.inject.Inject
 
 class AppHealthCheck @Inject constructor(

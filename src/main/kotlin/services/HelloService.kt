@@ -1,21 +1,21 @@
 package services
 
-import clients.HelloClient
-import clients.HttpBinResponse
+import api.request.RequestType
+import api.response.HelloResponse
+import clients.HttpbinClient
 import org.slf4j.LoggerFactory
 import javax.inject.Inject
 import javax.inject.Singleton
 
-enum class RequestType {
-    DELAY, STATUS, SIMPLE
-}
-
 @Singleton
-class HelloService @Inject constructor(private val client: HelloClient) {
+class HelloService @Inject constructor(private val client: HttpbinClient) {
     private val logger = LoggerFactory.getLogger(this::class.java)
-    suspend fun getSimpleResponse(type: RequestType?, payload: Int?): HttpBinResponse? {
+    suspend fun getSimpleResponse(type: RequestType?, payload: Int?): HelloResponse? {
         return when (type) {
-            RequestType.SIMPLE, null -> client.getSimpleResponse()
+            RequestType.SIMPLE, null -> {
+                val response = client.getSimpleResponse() ?: throw RuntimeException("Wrong response type")
+                HelloResponse(example = response.url)
+            }
             RequestType.DELAY -> {
                 client.getDelayResponse(payload ?: 0)
                 null
