@@ -14,7 +14,7 @@ enum class RequestType {
 class HelloService @Inject constructor(private val client: HelloClient) {
     private val logger = LoggerFactory.getLogger(this::class.java)
     suspend fun getSimpleResponse(type: RequestType?, payload: Int?): HttpBinResponse? {
-        return when(type) {
+        return when (type) {
             RequestType.SIMPLE, null -> client.getSimpleResponse()
             RequestType.DELAY -> {
                 client.getDelayResponse(payload ?: 0)
@@ -27,4 +27,3 @@ class HelloService @Inject constructor(private val client: HelloClient) {
         }
     }
 }
-

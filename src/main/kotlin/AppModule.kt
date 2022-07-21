@@ -10,7 +10,7 @@ class AppModule : AbstractModule() {
     }
 
     @Provides
-    fun getHttpClient(config: AppConfiguration, env: Environment) : Client {
+    fun getHttpClient(config: AppConfiguration, env: Environment): Client {
         return JerseyClientBuilder(env).using(config.jerseyClient).build(env.name)
     }
 }
