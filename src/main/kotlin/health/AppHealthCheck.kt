@@ -1,6 +1,5 @@
 package health
 
-import api.req.RequestType
 import kotlinx.coroutines.runBlocking
 import ru.vyarus.dropwizard.guice.module.installer.feature.health.NamedHealthCheck
 import services.HelloService
