@@ -1,7 +1,8 @@
 import io.dropwizard.Configuration
 import io.dropwizard.client.JerseyClientConfiguration
 
-class AppConfiguration(
+data class AppConfiguration(
     val appName: String? = "",
+    val httpbinBaseUrl: String? = "",
     val jerseyClient: JerseyClientConfiguration = JerseyClientConfiguration()
 ) : Configuration()

@@ -6,4 +6,5 @@ server:
     - type: http
       port: 8081
 
-appName: "dropwizard-kotlin application"
+appName: "dropwizard-kotlin example"
+httpbinBaseUrl: https://httpbin.org
