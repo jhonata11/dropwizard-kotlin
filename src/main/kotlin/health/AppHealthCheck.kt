@@ -1,11 +1,22 @@
 package health
 
+import kotlinx.coroutines.runBlocking
 import ru.vyarus.dropwizard.guice.module.installer.feature.health.NamedHealthCheck
+import services.HelloService
+import services.RequestType
+import javax.inject.Inject
 
-class AppHealthCheck : NamedHealthCheck() {
+class AppHealthCheck @Inject constructor(
+    private val helloService: HelloService
+) : NamedHealthCheck() {
+    override fun getName() = "httpbin.org"
+
     override fun check(): Result {
-        return Result.healthy()
+        return try {
+            runBlocking { helloService.getSimpleResponse(RequestType.STATUS, 200) }
+            Result.healthy()
+        } catch (e: Exception) {
+            Result.unhealthy(e.message)
+        }
     }
-
-    override fun getName() = "some health check"
 }
