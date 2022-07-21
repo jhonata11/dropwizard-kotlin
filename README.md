@@ -14,4 +14,5 @@ This will basically start the application using the settings from the [`dev.yml`
 ## Features
 Here are some features this template repository has:
 - Dependency injection with [Guice](https://github.com/google/guice).
+- Unit and integration tests with [Wiremock](https://wiremock.org/)
  
