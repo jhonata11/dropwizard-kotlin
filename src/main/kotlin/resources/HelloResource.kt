@@ -2,7 +2,6 @@ package resources
 
 import services.HelloService
 import services.RequestType
-import services.executeAsync
 import javax.inject.Inject
 import javax.validation.constraints.NotBlank
 import javax.ws.rs.GET

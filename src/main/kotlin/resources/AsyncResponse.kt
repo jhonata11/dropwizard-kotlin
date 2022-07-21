@@ -1,4 +1,4 @@
-package services
+package resources
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
