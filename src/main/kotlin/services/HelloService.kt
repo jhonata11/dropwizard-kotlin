@@ -1,7 +1,7 @@
 package services
 
-import api.request.RequestType
-import api.response.HelloResponse
+import api.req.RequestType
+import api.res.HelloResponse
 import clients.HttpbinClient
 import org.slf4j.LoggerFactory
 import javax.inject.Inject

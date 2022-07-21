@@ -1,6 +1,6 @@
 package resources
 
-import api.request.RequestType
+import api.req.RequestType
 import services.HelloService
 import javax.inject.Inject
 import javax.validation.constraints.NotBlank

@@ -1,4 +1,4 @@
-package api.request
+package api.req
 
 enum class RequestType {
     DELAY, STATUS, SIMPLE

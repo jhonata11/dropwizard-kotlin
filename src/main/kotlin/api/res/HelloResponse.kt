@@ -1,3 +1,3 @@
-package api.response
+package api.res
 
 data class HelloResponse(val example: String)
