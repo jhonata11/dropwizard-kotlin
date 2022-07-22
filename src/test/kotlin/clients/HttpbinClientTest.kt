@@ -62,7 +62,7 @@ class HttpbinClientTest {
     }
 
     @Test
-    fun `it times out after 500ms`(): Unit = runTest {
+    fun `it times out after`(): Unit = runTest {
         wiremock.stubFor(
             get("/get").willReturn(
                 ok().withFixedDelay(500)
@@ -75,7 +75,7 @@ class HttpbinClientTest {
     }
 
     @Test
-    fun `it doesn't timeout before 500ms`(): Unit = runTest {
+    fun `it doesn't timeout`(): Unit = runTest {
         wiremock.stubFor(
             get("/get").willReturn(
                 okJson(
@@ -86,7 +86,7 @@ class HttpbinClientTest {
                           "url": "https://httpbin.org/get"
                         }
                     """.trimIndent()
-                ).withFixedDelay(200)
+                ).withFixedDelay(100)
             )
         )
         val response = sut.getSimpleResponse()
