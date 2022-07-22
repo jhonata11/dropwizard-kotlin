@@ -22,6 +22,8 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:1.7.10"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4"
 
+    testImplementation 'io.rest-assured:rest-assured:5.1.1'
+    testImplementation 'io.rest-assured:kotlin-extensions:5.1.1'
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4"
     testImplementation "io.dropwizard:dropwizard-testing:2.1.1"
     testImplementation "com.github.tomakehurst:wiremock-jre8:2.33.2"
@@ -45,3 +47,24 @@ mainClassName = 'MainKt'
 run {
     args 'server', 'dev.yml'
 }
+
+sourceSets {
+    integration {
+        kotlin {
+            srcDir 'src/integration/kotlin'
+        }
+        resources {
+            srcDir 'src/integration/resource'
+        }
+        compileClasspath += sourceSets.main.runtimeClasspath
+        compileClasspath += sourceSets.test.runtimeClasspath
+    }
+}
+
+task integrationTest(type: Test) {
+    description = "Runs Integration Tests"
+    testClassesDirs = sourceSets.integration.output.classesDirs
+    classpath += sourceSets.integration.runtimeClasspath
+    useJUnitPlatform()
+}
+ test.finalizedBy(integrationTest)
