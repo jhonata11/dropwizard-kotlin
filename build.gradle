@@ -67,4 +67,3 @@ task integrationTest(type: Test) {
     classpath += sourceSets.integration.runtimeClasspath
     useJUnitPlatform()
 }
- test.finalizedBy(integrationTest)

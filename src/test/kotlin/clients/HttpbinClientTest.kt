@@ -1,5 +1,6 @@
 package clients
 
+import App
 import AppConfiguration
 import assertk.assertThat
 import assertk.assertions.hasMessage
@@ -11,41 +12,26 @@ import com.github.tomakehurst.wiremock.client.WireMock.ok
 import com.github.tomakehurst.wiremock.client.WireMock.okJson
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig
 import com.github.tomakehurst.wiremock.junit5.WireMockExtension
-import io.dropwizard.client.JerseyClientBuilder
-import io.dropwizard.client.JerseyClientConfiguration
-import io.dropwizard.testing.junit5.DropwizardClientExtension
-import io.dropwizard.testing.junit5.DropwizardExtensionsSupport
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.extension.ExtendWith
 import org.junit.jupiter.api.extension.RegisterExtension
+import ru.vyarus.dropwizard.guice.test.jupiter.TestGuiceyApp
+import javax.inject.Inject
 import javax.ws.rs.ProcessingException
 import javax.ws.rs.client.Client
 
 @OptIn(ExperimentalCoroutinesApi::class)
-@ExtendWith(DropwizardExtensionsSupport::class)
+@TestGuiceyApp(App::class)
 class HttpbinClientTest {
-
-    companion object {
-        private val extension = DropwizardClientExtension()
-        private val jerseyClientConfiguration = JerseyClientConfiguration()
-        private lateinit var client: Client
-        @BeforeAll
-        @JvmStatic
-        internal fun beforeAll() {
-            val env = extension.environment
-            this.client = JerseyClientBuilder(env).apply {
-                using(jerseyClientConfiguration)
-            }.build(env.name)
-        }
-    }
 
     @RegisterExtension
     private val wiremock = WireMockExtension.newInstance().apply {
         options(wireMockConfig().dynamicPort())
     }.build()
+
+    @Inject
+    private lateinit var client: Client
 
     private val sut: HttpbinClient by lazy {
         val config = AppConfiguration(httpbinBaseUrl = wiremock.baseUrl())
