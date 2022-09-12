@@ -15,7 +15,7 @@ repositories {
 
 dependencies {
     implementation 'io.dropwizard:dropwizard-core:2.1.1'
-    implementation 'io.dropwizard:dropwizard-client:2.1.1'
+    implementation 'io.dropwizard:dropwizard-client:2.1.2'
     implementation 'dev.failsafe:failsafe:3.2.4'
     implementation 'com.google.inject:guice:5.1.0'
     implementation 'ru.vyarus:dropwizard-guicey:5.6.1'
