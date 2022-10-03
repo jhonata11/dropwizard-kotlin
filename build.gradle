@@ -28,23 +28,23 @@ project.ext {
 
 dependencies {
     // Runtime dependencies
-    implementation "io.dropwizard:dropwizard-core:${dropwizardVersion}"
-    implementation "io.dropwizard:dropwizard-client:${dropwizardVersion}"
-    implementation "com.google.inject:guice:${guiceVersion}"
-    implementation "ru.vyarus:dropwizard-guicey:${dropwizardGuiceyVersion}"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutinesVersion}"
+    implementation "io.dropwizard:dropwizard-core:$dropwizardVersion"
+    implementation "io.dropwizard:dropwizard-client:$dropwizardVersion"
+    implementation "com.google.inject:guice:$guiceVersion"
+    implementation "ru.vyarus:dropwizard-guicey:$dropwizardGuiceyVersion"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
 
     // Test dependencies
-    testImplementation "io.rest-assured:rest-assured:${restAssuredVersion}"
-    testImplementation "io.rest-assured:kotlin-extensions:${restAssuredVersion}"
-    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:${coroutinesVersion}"
-    testImplementation "io.dropwizard:dropwizard-testing:${dropwizardVersion}"
-    testImplementation "com.github.tomakehurst:wiremock-jre8:${wiremockVersion}"
+    testImplementation "io.rest-assured:rest-assured:$restAssuredVersion"
+    testImplementation "io.rest-assured:kotlin-extensions:$restAssuredVersion"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion"
+    testImplementation "io.dropwizard:dropwizard-testing:$dropwizardVersion"
+    testImplementation "com.github.tomakehurst:wiremock-jre8:$wiremockVersion"
     testImplementation "com.willowtreeapps.assertk:assertk-jvm:$assertKVersion"
-    testImplementation "io.mockk:mockk:${mockKVersion}"
-    testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
-    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
+    testImplementation "io.mockk:mockk:$mockKVersion"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
 }
 
 test {
