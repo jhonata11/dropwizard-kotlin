@@ -1,5 +1,5 @@
 plugins {
-    id 'org.jetbrains.kotlin.jvm' version "1.7.10"
+    id 'org.jetbrains.kotlin.jvm' version "1.7.20"
     id 'java'
     id 'application'
     id 'com.github.johnrengelman.shadow' version '7.1.2'
@@ -13,24 +13,38 @@ repositories {
     mavenCentral()
 }
 
-dependencies {
-    implementation 'io.dropwizard:dropwizard-core:2.1.2'
-    implementation 'io.dropwizard:dropwizard-client:2.1.2'
-    implementation 'dev.failsafe:failsafe:3.2.4'
-    implementation 'com.google.inject:guice:5.1.0'
-    implementation 'ru.vyarus:dropwizard-guicey:5.6.1'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.7.10"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4"
+project.ext {
+    kotlinVersion = '1.7.20'
+    coroutinesVersion = '1.6.4'
+    dropwizardVersion = '2.1.2'
+    guiceVersion = '5.1.0'
+    dropwizardGuiceyVersion = '5.6.1'
+    junitVersion = '5.9.1'
+    restAssuredVersion = '5.2.0'
+    assertKVersion = '0.25'
+    mockKVersion = '1.13.2'
+    wiremockVersion = '2.33.2'
+}
 
-    testImplementation 'io.rest-assured:rest-assured:5.2.0'
-    testImplementation 'io.rest-assured:kotlin-extensions:5.2.0'
-    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4"
-    testImplementation "io.dropwizard:dropwizard-testing:2.1.2"
-    testImplementation "com.github.tomakehurst:wiremock-jre8:2.33.2"
-    testImplementation 'com.willowtreeapps.assertk:assertk-jvm:0.25'
-    testImplementation "io.mockk:mockk:1.12.7"
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.0'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.1'
+dependencies {
+    // Runtime dependencies
+    implementation "io.dropwizard:dropwizard-core:${dropwizardVersion}"
+    implementation "io.dropwizard:dropwizard-client:${dropwizardVersion}"
+    implementation "com.google.inject:guice:${guiceVersion}"
+    implementation "ru.vyarus:dropwizard-guicey:${dropwizardGuiceyVersion}"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutinesVersion}"
+
+    // Test dependencies
+    testImplementation "io.rest-assured:rest-assured:${restAssuredVersion}"
+    testImplementation "io.rest-assured:kotlin-extensions:${restAssuredVersion}"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:${coroutinesVersion}"
+    testImplementation "io.dropwizard:dropwizard-testing:${dropwizardVersion}"
+    testImplementation "com.github.tomakehurst:wiremock-jre8:${wiremockVersion}"
+    testImplementation "com.willowtreeapps.assertk:assertk-jvm:$assertKVersion"
+    testImplementation "io.mockk:mockk:${mockKVersion}"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
 }
 
 test {
