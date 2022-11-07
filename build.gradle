@@ -23,7 +23,7 @@ project.ext {
     restAssuredVersion = '5.2.0'
     assertKVersion = '0.25'
     mockKVersion = '1.13.2'
-    wiremockVersion = '2.33.2'
+    wiremockVersion = '2.35.0'
 }
 
 dependencies {
