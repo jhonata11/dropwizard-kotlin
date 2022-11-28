@@ -9,7 +9,7 @@ This project is build around the [gradle wrapper](https://docs.gradle.org/curren
 ```console
 $ ./gradlew run
 ```
-This will basically start the application using the settings from the [`dev.yml`](dev.yml) file. 
+This will basically start the application using the settings from the [`dev.yml`](config/dev.yml) file. 
 
 ## Features
 Here are some features this template repository has:

@@ -59,7 +59,7 @@ shadowJar {
 
 mainClassName = 'MainKt'
 run {
-    args 'server', 'dev.yml'
+    args 'server', 'config/dev.yml'
 }
 
 sourceSets {
