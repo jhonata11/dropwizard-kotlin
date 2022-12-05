@@ -22,7 +22,7 @@ project.ext {
     junitVersion = '5.9.1'
     restAssuredVersion = '5.3.0'
     assertKVersion = '0.25'
-    mockKVersion = '1.13.2'
+    mockKVersion = '1.13.3'
     wiremockVersion = '2.35.0'
 }
 
