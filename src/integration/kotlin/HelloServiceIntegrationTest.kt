@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test
 import ru.vyarus.dropwizard.guice.test.jupiter.TestDropwizardApp
 
 const val configPath = "src/integration/resources/test.yml"
+
 @TestDropwizardApp(value = App::class, config = configPath)
 class HelloServiceIntegrationTest {
     @Test
