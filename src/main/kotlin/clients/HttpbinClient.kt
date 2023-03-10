@@ -18,17 +18,19 @@ class HttpbinClient @Inject constructor(
 
     suspend fun getSimpleResponse(): HttpbinResponse = withContext(Dispatchers.IO) {
         val webTarget = client.target("${config.httpbinBaseUrl}/get")
-        val invocation = webTarget.request(MediaType.APPLICATION_JSON)
-        val res = invocation.get(HttpbinResponse::class.java)
+        val response = webTarget.request().apply {
+            acceptEncoding(MediaType.APPLICATION_JSON)
+        }.get(HttpbinResponse::class.java)
         logger.info("getSimpleResponse - OK")
-        return@withContext res
+        return@withContext response
     }
 
     suspend fun getDelayedResponse(): HttpbinResponse = withContext(Dispatchers.IO) {
         val webTarget = client.target("${config.httpbinBaseUrl}/delay/10")
-        val invocation = webTarget.request(MediaType.APPLICATION_JSON)
-        val res = invocation.get(HttpbinResponse::class.java)
+        val response = webTarget.request().apply {
+            acceptEncoding(MediaType.APPLICATION_JSON)
+        }.get(HttpbinResponse::class.java)
         logger.info("getDelayedResponse - OK")
-        return@withContext res
+        return@withContext response
     }
 }

@@ -13,7 +13,7 @@ fun <T> AsyncResponse.executeAsync(dispatcher: CoroutineDispatcher = Dispatchers
         try {
             resume(block())
         } catch (ex: ProcessingException) {
-            resume(Response.status(408).build())
+            resume(Response.status(503).build())
         } catch (t: Throwable) {
             resume(t)
         }

@@ -7,9 +7,9 @@ server:
       port: 8081
 
 jerseyClient:
-  timeout: 2s
-  connectionTimeout: 2s
-  connectionRequestTimeout: 2s
+  timeout: 500ms
+  connectionTimeout: 500ms
+  connectionRequestTimeout: 500ms
 
 appName: integration-test
-httpbinBaseUrl: https://httpbin.org
+httpbinBaseUrl: http://localhost:55012
