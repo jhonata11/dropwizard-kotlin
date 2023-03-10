@@ -6,5 +6,10 @@ server:
     - type: http
       port: 8081
 
+jerseyClient:
+  timeout: 2s
+  connectionTimeout: 2s
+  connectionRequestTimeout: 2s
+
 appName: "dropwizard-kotlin example"
 httpbinBaseUrl: https://httpbin.org

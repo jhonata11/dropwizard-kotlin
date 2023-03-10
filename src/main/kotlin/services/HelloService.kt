@@ -10,7 +10,8 @@ import javax.inject.Singleton
 class HelloService @Inject constructor(private val client: HttpbinClient) {
     private val logger = LoggerFactory.getLogger(this::class.java)
     suspend fun getSimpleResponse(): HelloResponse {
-        val response = client.getSimpleResponse()
-        return HelloResponse(example = response.url)
+        val res = client.getSimpleResponse()
+        logger.info("Servide executed")
+        return HelloResponse(example = res.url)
     }
 }

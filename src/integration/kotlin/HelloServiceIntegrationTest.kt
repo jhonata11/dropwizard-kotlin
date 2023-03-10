@@ -5,9 +5,7 @@ import org.hamcrest.Matchers.equalTo
 import org.junit.jupiter.api.Test
 import ru.vyarus.dropwizard.guice.test.jupiter.TestDropwizardApp
 
-const val configPath = "src/integration/resources/test.yml"
-
-@TestDropwizardApp(value = App::class, config = configPath)
+@TestDropwizardApp(value = App::class, config = "src/integration/resources/test.yml")
 class HelloServiceIntegrationTest {
     @Test
     fun `it should call live service`() {
