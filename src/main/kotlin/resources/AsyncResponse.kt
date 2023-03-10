@@ -14,7 +14,7 @@ fun <T> AsyncResponse.executeAsync(dispatcher: CoroutineDispatcher = Dispatchers
         try {
             resume(block())
         } catch (ex: ProcessingException) {
-            val res = when(ex.cause?.cause) {
+            val res = when (ex.cause?.cause) {
                 is SocketTimeoutException -> Response.status(503).build()
                 else -> Response.status(500).build()
             }
