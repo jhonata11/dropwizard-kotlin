@@ -58,6 +58,7 @@ shadowJar {
 }
 
 mainClassName = 'MainKt'
+
 run {
     args 'server', 'config/dev.yml'
 }
