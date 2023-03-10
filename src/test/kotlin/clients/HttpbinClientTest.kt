@@ -8,12 +8,10 @@ import assertk.assertions.isEqualTo
 import assertk.assertions.isFailure
 import assertk.assertions.isInstanceOf
 import com.github.tomakehurst.wiremock.client.WireMock.get
-import com.github.tomakehurst.wiremock.client.WireMock.ok
 import com.github.tomakehurst.wiremock.client.WireMock.okJson
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig
 import com.github.tomakehurst.wiremock.junit5.WireMockExtension
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.RegisterExtension
 import ru.vyarus.dropwizard.guice.test.jupiter.TestGuiceyApp
@@ -21,7 +19,6 @@ import javax.inject.Inject
 import javax.ws.rs.ProcessingException
 import javax.ws.rs.client.Client
 
-@OptIn(ExperimentalCoroutinesApi::class)
 @TestGuiceyApp(App::class)
 class HttpbinClientTest {
 
@@ -39,7 +36,7 @@ class HttpbinClientTest {
     }
 
     @Test
-    fun `it should load simple response successfully`(): Unit = runTest {
+    fun `it should load simple response successfully`() {
         wiremock.stubFor(
             get("/get").willReturn(
                 okJson(
@@ -56,26 +53,34 @@ class HttpbinClientTest {
             )
         )
 
-        val response = sut.getSimpleResponse()
+        val response = runBlocking { sut.getSimpleResponse() }
         assertThat(response.url).isEqualTo("https://httpbin.org/get")
         assertThat(response.headers.host).isEqualTo("httpbin.org")
     }
 
     @Test
-    fun `it times out after`(): Unit = runTest {
+    fun `it times out after`() {
         wiremock.stubFor(
             get("/get").willReturn(
-                ok().withFixedDelay(500)
+                okJson(
+                    """{
+                          "headers": {
+                            "Host": "httpbin.org"
+                          },
+                          "url": "https://httpbin.org/get"
+                        }
+                    """.trimIndent()
+                ).withFixedDelay(501)
             )
         )
-        assertThat { sut.getSimpleResponse() }
+        assertThat { runBlocking { sut.getSimpleResponse() } }
             .isFailure()
             .isInstanceOf(ProcessingException::class.java)
             .hasMessage("java.net.SocketTimeoutException: Read timed out")
     }
 
     @Test
-    fun `it doesn't timeout`(): Unit = runTest {
+    fun `it doesn't timeout`() {
         wiremock.stubFor(
             get("/get").willReturn(
                 okJson(
@@ -89,7 +94,7 @@ class HttpbinClientTest {
                 ).withFixedDelay(100)
             )
         )
-        val response = sut.getSimpleResponse()
+        val response = runBlocking { sut.getSimpleResponse() }
         assertThat(response.url).isEqualTo("https://httpbin.org/get")
         assertThat(response.headers.host).isEqualTo("httpbin.org")
     }
