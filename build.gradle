@@ -80,9 +80,11 @@ sourceSets {
     }
 }
 
-task integrationTest(type: Test) {
+tasks.register('integrationTest', Test) {
     description = "Runs Integration Tests"
     testClassesDirs = sourceSets.integration.output.classesDirs
     classpath += sourceSets.integration.runtimeClasspath
     useJUnitPlatform()
 }
+
+build.dependsOn integrationTest
