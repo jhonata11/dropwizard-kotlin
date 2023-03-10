@@ -12,7 +12,7 @@ class AppHealthCheck @Inject constructor(
 
     override fun check(): Result {
         return try {
-            runBlocking { helloService.getSimpleResponse() }
+            runBlocking { helloService.getAsyncResponse() }
             Result.healthy()
         } catch (e: Exception) {
             Result.unhealthy(e.message)

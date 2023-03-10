@@ -2,13 +2,12 @@ package clients
 
 import AppConfiguration
 import clients.models.HttpbinResponse
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import javax.inject.Inject
 import javax.ws.rs.client.Client
 import javax.ws.rs.core.MediaType
+import javax.ws.rs.core.UriBuilder
 
 class HttpbinClient @Inject constructor(
     private val config: AppConfiguration,
@@ -16,21 +15,14 @@ class HttpbinClient @Inject constructor(
 ) {
     private val logger: Logger = LoggerFactory.getLogger(this::class.java)
 
-    suspend fun getSimpleResponse(): HttpbinResponse = withContext(Dispatchers.IO) {
-        val webTarget = client.target("${config.httpbinBaseUrl}/get")
+    fun getResponse(name: String, delay: Int): HttpbinResponse {
+        val path = "${config.httpbinBaseUrl}/delay/$delay"
+        val uri = UriBuilder.fromUri(path).queryParam("name", name).build()
+        val webTarget = client.target(uri)
         val response = webTarget.request().apply {
             acceptEncoding(MediaType.APPLICATION_JSON)
         }.get(HttpbinResponse::class.java)
-        logger.info("getSimpleResponse - OK")
-        return@withContext response
-    }
-
-    suspend fun getDelayedResponse(): HttpbinResponse = withContext(Dispatchers.IO) {
-        val webTarget = client.target("${config.httpbinBaseUrl}/delay/10")
-        val response = webTarget.request().apply {
-            acceptEncoding(MediaType.APPLICATION_JSON)
-        }.get(HttpbinResponse::class.java)
-        logger.info("getDelayedResponse - OK")
-        return@withContext response
+        logger.info("$name - OK")
+        return response
     }
 }

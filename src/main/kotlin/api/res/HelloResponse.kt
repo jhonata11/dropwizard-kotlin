@@ -1,3 +1,3 @@
 package api.res
 
-data class HelloResponse(val example: String)
+data class HelloResponse(val data: List<String>)

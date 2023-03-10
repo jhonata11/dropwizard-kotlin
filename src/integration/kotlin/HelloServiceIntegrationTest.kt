@@ -6,6 +6,7 @@ import io.restassured.module.kotlin.extensions.Then
 import io.restassured.module.kotlin.extensions.When
 import org.hamcrest.Matchers.equalTo
 import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.RegisterExtension
 import ru.vyarus.dropwizard.guice.test.jupiter.TestDropwizardApp
@@ -13,30 +14,29 @@ import ru.vyarus.dropwizard.guice.test.jupiter.TestDropwizardApp
 @TestDropwizardApp(value = App::class, config = "src/integration/resources/test.yml")
 class HelloServiceIntegrationTest {
 
-    @RegisterExtension
-    private val wiremock = WireMockExtension.newInstance().apply {
-        options(WireMockConfiguration.wireMockConfig().port(55012))
-    }.build()
-
     companion object {
         @BeforeAll
         @JvmStatic
         fun beforeClass() {
             RestAssured.port = 8080
         }
+
+        @JvmStatic
+        @RegisterExtension
+        private val WIREMOCK = WireMockExtension.newInstance().apply {
+            options(WireMockConfiguration.wireMockConfig().port(55012))
+        }.build()
     }
 
-    @Test
-    fun `it should execute call successfully`() {
-        wiremock.stubFor(
-            WireMock.get("/get").willReturn(
+    @BeforeEach
+    fun beforeEach() {
+        WIREMOCK.stubFor(
+            WireMock.get("/delay/3?name=request1").willReturn(
                 WireMock.okJson(
                     """{
-                          "args": {}, 
-                          "headers": {
-                            "Host": "httpbin.org"
-                          }, 
-                          "origin": "82.129.115.49", 
+                          "args": {
+                              "name": "request1"
+                          },
                           "url": "https://httpbin.org/get"
                         }
                     """.trimIndent()
@@ -44,21 +44,52 @@ class HelloServiceIntegrationTest {
             )
         )
 
+        WIREMOCK.stubFor(
+            WireMock.get("/delay/1?name=request2").willReturn(
+                WireMock.okJson(
+                    """{
+                          "args": {
+                              "name": "request2"
+                          },
+                          "url": "https://httpbin.org/get"
+                        }
+                    """.trimIndent()
+                )
+            )
+        )
+
+        WIREMOCK.stubFor(
+            WireMock.get("/delay/1?name=request3").willReturn(
+                WireMock.okJson(
+                    """{
+                          "args": {
+                              "name": "request3"
+                          },
+                          "url": "https://httpbin.org/get"
+                        }
+                    """.trimIndent()
+                )
+            )
+        )
+    }
+
+    @Test
+    fun `it should execute call successfully`() {
         When {
-            get("/hello")
+            get("/api/async")
         } Then {
-            body("example", equalTo("https://httpbin.org/get"))
+            body("data", equalTo(listOf("request1", "request2", "request3")))
         }
     }
 
     @Test
-    fun `it should timeout after deadline`() {
-        wiremock.stubFor(
-            WireMock.get("/get").willReturn(
+    fun `it should timeout when jersey client times out`() {
+        WIREMOCK.stubFor(
+            WireMock.get("/delay/3?name=request1").willReturn(
                 WireMock.okJson(
                     """{
-                          "headers": {
-                            "Host": "httpbin.org"
+                          "args": {
+                              "name": "request1"
                           },
                           "url": "https://httpbin.org/get"
                         }
@@ -68,7 +99,7 @@ class HelloServiceIntegrationTest {
         )
 
         When {
-            get("/hello")
+            get("/api/async")
         } Then {
             statusCode(503)
         }
