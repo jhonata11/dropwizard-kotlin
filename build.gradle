@@ -16,7 +16,7 @@ repositories {
 project.ext {
     kotlinVersion = '1.8.10'
     coroutinesVersion = '1.6.4'
-    dropwizardVersion = '2.1.5'
+    dropwizardVersion = '4.0.0'
     guiceVersion = '5.1.0'
     dropwizardGuiceyVersion = '5.7.1'
     junitVersion = '5.9.2'
