@@ -17,7 +17,7 @@ project.ext {
     kotlinVersion = '1.8.21'
     coroutinesVersion = '1.6.4'
     dropwizardVersion = '2.1.5'
-    guiceVersion = '5.1.0'
+    guiceVersion = '7.0.0'
     dropwizardGuiceyVersion = '5.7.1'
     junitVersion = '5.9.2'
     restAssuredVersion = '5.3.0'
