@@ -2,12 +2,12 @@ package clients
 
 import AppConfiguration
 import clients.models.HttpbinResponse
+import jakarta.inject.Inject
+import jakarta.ws.rs.client.Client
+import jakarta.ws.rs.core.MediaType
+import jakarta.ws.rs.core.UriBuilder
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import javax.inject.Inject
-import javax.ws.rs.client.Client
-import javax.ws.rs.core.MediaType
-import javax.ws.rs.core.UriBuilder
 
 class HttpbinClient @Inject constructor(
     private val config: AppConfiguration,

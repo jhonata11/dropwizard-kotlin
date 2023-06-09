@@ -7,12 +7,12 @@ import clients.models.HttpBinArgs
 import clients.models.HttpbinResponse
 import io.mockk.every
 import io.mockk.mockk
+import jakarta.ws.rs.client.Client
+import jakarta.ws.rs.client.Invocation
+import jakarta.ws.rs.client.WebTarget
+import jakarta.ws.rs.core.MediaType
 import org.junit.jupiter.api.Test
 import java.net.URI
-import javax.ws.rs.client.Client
-import javax.ws.rs.client.Invocation
-import javax.ws.rs.client.WebTarget
-import javax.ws.rs.core.MediaType
 
 class HttpbinClientTest {
     private val config = AppConfiguration(httpbinBaseUrl = "http://testurl.com")

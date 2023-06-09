@@ -1,5 +1,5 @@
-import io.dropwizard.Configuration
 import io.dropwizard.client.JerseyClientConfiguration
+import io.dropwizard.core.Configuration
 
 data class AppConfiguration(
     val appName: String? = "",

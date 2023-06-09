@@ -2,12 +2,12 @@ package services
 
 import api.res.HelloResponse
 import clients.HttpbinClient
+import jakarta.inject.Inject
+import jakarta.inject.Singleton
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 import org.slf4j.LoggerFactory
-import javax.inject.Inject
-import javax.inject.Singleton
 
 @Singleton
 class HelloService @Inject constructor(private val client: HttpbinClient) {

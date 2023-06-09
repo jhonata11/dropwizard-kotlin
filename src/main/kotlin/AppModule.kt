@@ -2,8 +2,8 @@ import com.google.inject.AbstractModule
 import com.google.inject.Provides
 import com.google.inject.Singleton
 import io.dropwizard.client.JerseyClientBuilder
-import io.dropwizard.setup.Environment
-import javax.ws.rs.client.Client
+import io.dropwizard.core.setup.Environment
+import jakarta.ws.rs.client.Client
 
 class AppModule : AbstractModule() {
     override fun configure() {
