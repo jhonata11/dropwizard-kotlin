@@ -19,7 +19,7 @@ project.ext {
     dropwizardVersion = '4.0.1'
     guiceVersion = '7.0.0'
     dropwizardGuiceyVersion = '7.0.0'
-    junitVersion = '5.9.3'
+    junitVersion = '5.10.0'
     restAssuredVersion = '5.3.1'
     assertKVersion = '0.26.1'
     mockKVersion = '1.13.3'
